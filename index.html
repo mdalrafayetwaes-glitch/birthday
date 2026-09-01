@@ -138,15 +138,20 @@
                 </div>
                 <div class="card2">
                     <div class="card2-content">
-                        <h3>To You!</h3>
-                        <h2>Happy birthday Nimu.🥳🎂🥳 Stay blessed, keep smiling and keep shining!❤️✨ May Allah give you 
+                        <h3 class="title__letter"></h3>
+                        <h2>Happy birthday Nimu.🥳🎂🥳 Stay blessed, keep smiling and keep shining!❤️✨ May Allah give you
                             endless happiness.🤲 Bolar to aro onek kichu ase but ki die suru korbo bujhte parchina.😅 BUt I
-                            want to say you that you are very special for me. Yeap, new life, new time, new place, new people 
-                            just enjoy it.❤️✨ Ummm, jani na tomake evabe kew kokhono wish korece ki na. But I want to say 
-                            that no one can wish you better than me.😌 He He last one, ami ke, amr identity ki egulo khujar 
+                            want to say you that you are very special for me. Yeap, new life, new time, new place, new people
+                            just enjoy it.❤️✨ Ummm, jani na tomake evabe kew kokhono wish korece ki na. But I want to say
+                            that no one can wish you better than me.😌 He He last one, ami ke, amr identity ki egulo khujar
                             dorkar nai, mone kore rakho Mr. Unknown or X 😎. Enjoy your Birthday! tatusss Nimu🎈🎂🎈😌
                         </h2>
-                                                                        ''
+
+                        <!-- datatxtletter টাইপ হয়ে এখানে আসবে -->
+                        <div class="text__letter">
+                            <p></p>
+                        </div>
+
                         <div class="imageCute2">
                             <img src="cute2.png" alt="">
                         </div>
@@ -169,6 +174,8 @@
     let currentIndexTitle = 0;
     let date__of__birth = document.querySelector(".date__of__birth span");
     let text__letter = document.querySelector(".text__letter p");
+    let title__letter = document.querySelector(".title__letter");
+
     setTimeout(function () {
         timeDatetxt = setInterval(function () {
             if (currentIndex < charArrDate.length) {
@@ -187,75 +194,59 @@
 
     var intervalContent;
     var intervalTitle;
-    $("#btn__letter").on("click", function () {
-        $(".box__letter").slideDown()
-        setTimeout(function () {
-            $(".letter__border").slideDown();
-        }, 1000)
-        setTimeout(function () {
-            intervalTitle = setInterval(function () {
-                if (currentIndexTitle < charArrTitle.length) {
-                    document.querySelector(".title__letter").textContent += charArrTitle[currentIndexTitle];
-                    let i = document.createElement("i");
-                    i.className = "fa-solid fa-heart"
-                    document.querySelector(".title__letter").appendChild(i)
-                    currentIndexTitle++;
-                }
-                else {
-                    clearInterval(intervalTitle)
-                }
-            }, 100)
-        }, 2000)
-        setTimeout(function () {
-            document.querySelector("#heart__letter").classList.add("animationOp");
-            document.querySelector(".love__img").classList.add("animationOp");
-            document.querySelector("#mewmew").classList.add("animationOp");
-        }, 2800)
-        setTimeout(function () {
-            document.querySelectorAll(".heart").forEach((item) => {
-                item.classList.add("animation")
-            })
-        }, 3500)
-        setTimeout(function () {
-            intervalContent = setInterval(function () {
-                if (currentIndexLetter < charArrDateLetter.length) {
-                    text__letter.textContent += charArrDateLetter[currentIndexLetter];
-                    currentIndexLetter++;
-                }
-                else {
-                    clearInterval(intervalContent)
-                }
-            }, 50)
-        }, 6000)
-    })
-    $(".close").on("click", function () {
+
+    // title age type hobe, tarpor letter body
+    function startLetterTyping() {
+        clearInterval(intervalTitle);
+        clearInterval(intervalContent);
+        title__letter.textContent = "";
+        text__letter.textContent = "";
+        currentIndexTitle = 0;
+        currentIndexLetter = 0;
+
+        intervalTitle = setInterval(function () {
+            if (currentIndexTitle < charArrTitle.length) {
+                title__letter.textContent += charArrTitle[currentIndexTitle];
+                currentIndexTitle++;
+            }
+            else {
+                clearInterval(intervalTitle);
+                intervalContent = setInterval(function () {
+                    if (currentIndexLetter < charArrDateLetter.length) {
+                        text__letter.textContent += charArrDateLetter[currentIndexLetter];
+                        currentIndexLetter++;
+                    }
+                    else {
+                        clearInterval(intervalContent);
+                    }
+                }, 50)
+            }
+        }, 100)
+    }
+
+    function resetLetterTyping() {
+        clearInterval(intervalTitle)
         clearInterval(intervalContent)
-        document.querySelector(".title__letter").textContent = "";
+        title__letter.textContent = "";
         text__letter.textContent = "";
         currentIndexLetter = 0
         currentIndexTitle = 0
-        document.querySelector("#heart__letter").classList.remove("animationOp");
-        document.querySelector(".love__img").classList.remove("animationOp");
-        document.querySelector("#mewmew").classList.remove("animationOp");
-        document.querySelectorAll(".heart").forEach((item) => {
-            item.classList.remove("animation")
-        })
-        $(".box__letter").slideUp();
-        $(".letter__border").slideUp();
-    })
-
-
+    }
 
     let mailBox = document.querySelector('.mail')
     let boxmail = document.querySelector('.boxMail')
-    var close = document.querySelector('.fa-xmark')
+    var close = document.querySelector('.boxMail .fa-xmark')
+
     mailBox.onclick = function () {
         mailBox.classList.toggle('active')
         boxmail.classList.add('active')
+        startLetterTyping()
     }
 
     close.addEventListener('click', function () {
         boxmail.classList.remove('active')
+        mailBox.classList.remove('active')
+        resetLetterTyping()
     })
 </script>
 
